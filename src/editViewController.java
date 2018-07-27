@@ -21,6 +21,7 @@ import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
+import javafx.scene.layout.GridPane;
 
 public class editViewController implements Initializable {
 
@@ -30,6 +31,8 @@ public class editViewController implements Initializable {
     private int id;
     @FXML
     private Button closeStage;
+    @FXML private GridPane gp;
+    private Stage stageEditView;
 
 
 
@@ -71,13 +74,20 @@ public class editViewController implements Initializable {
             System.err.println(e.getMessage());
         }
         
-        Stage stage = (Stage) closeStage.getScene().getWindow();
-        stage.close();
+        resetEditView();
+        
+        
+        
 
 
 
 
-
+    }
+    public void resetEditView(){
+        nameUpdated.clear();
+        ageUpdated.clear();
+        addressUpdated.clear();
+        salaryUpdated.clear();
     }
     
     
@@ -86,6 +96,8 @@ public class editViewController implements Initializable {
     public void getID(int id){
         this.id = id;
     }
+    
+   
     
   
 
