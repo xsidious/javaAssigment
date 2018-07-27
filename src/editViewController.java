@@ -14,9 +14,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
 
 public class editViewController implements Initializable {
 
@@ -24,7 +28,8 @@ public class editViewController implements Initializable {
     @FXML
     private TextField nameUpdated,addressUpdated,ageUpdated,salaryUpdated;
     private int id;
-
+    @FXML
+    private Button closeStage;
 
 
 
@@ -45,18 +50,38 @@ public class editViewController implements Initializable {
         System.out.println(person.toString());
         
 
-//        try(Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/testt?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "root")) {
-//
-//        }  catch (Exception e) {
-//            System.err.println("Got an exception! ");
-//            System.err.println(e.getMessage());
-//        }
+        try(Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/testt?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "root")) {
+            Statement statement = connection.createStatement();
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT * from persons_new WHERE ID = '"+idNum+"' ");
+            while (rs.next()){
+                
+                String foo = rs.getString("id");
+                System.out.println(foo);
+   
+            }
+            stmt.executeUpdate("UPDATE persons_new SET first_name = '"+name+"', address = '"+address+"', age = '"+age+"', salary = '"+salary+"' WHERE ID = '"+idNum+"'");
+            
+            
+
+             
+            
+        }  catch (Exception e) {
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+        }
+        
+        Stage stage = (Stage) closeStage.getScene().getWindow();
+        stage.close();
 
 
 
 
 
     }
+    
+    
+    
 
     public void getID(int id){
         this.id = id;
